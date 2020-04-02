@@ -1,5 +1,7 @@
 package com.bridgelabz.moodanalyser;
 
+import com.bridgelabz.moodanalyser.exceptions.MoodAnalysisException;
+
 public class MoodAnalyser {
     String message;
 
@@ -10,7 +12,7 @@ public class MoodAnalyser {
         this.message = message;
     }
 
-    public String analyseMood() {
+    public String analyseMood() throws MoodAnalysisException {
         try {
             if (this.message.contains("sad"))
                 return "sad";
@@ -19,7 +21,7 @@ public class MoodAnalyser {
             return "Invalid mood";
         }
         catch (NullPointerException e) {
-            return "happy";
+            throw new MoodAnalysisException("Invalid message");
         }
     }
 }
