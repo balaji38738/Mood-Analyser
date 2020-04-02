@@ -39,4 +39,14 @@ public class MoodAnalyserTest {
             Assert.assertEquals("Invalid message", moodAnalysisException.getMessage());
         }
     }
+
+    @Test
+    public void givenMessage_whenEmpty_shouldThrowMoodAnalysisException() {
+        try {
+            moodAnalyser = new MoodAnalyser("");
+            String mood = moodAnalyser.analyseMood();
+        }catch (MoodAnalysisException moodAnalysisException) {
+            Assert.assertEquals("Empty mood", moodAnalysisException.getMessage());
+        }
+    }
 }
