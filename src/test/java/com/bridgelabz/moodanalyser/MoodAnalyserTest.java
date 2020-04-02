@@ -1,24 +1,34 @@
 package com.bridgelabz.moodanalyser;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class MoodAnalyserTest {
+    private MoodAnalyser moodAnalyser;
 
-    @Test
-    public void givenMessage_WhenSad_ShouldReturnSad() {
-        MoodAnalyser moodAnalyser = new MoodAnalyser();
-        String mood = moodAnalyser.analyseMood("Today I am sad");
-        Assert.assertEquals("sad", mood);
-        System.out.println();
+    @Before
+    public void initialize() {
+        moodAnalyser = new MoodAnalyser();
     }
 
     @Test
-    public void givenMessage_WhenHappy_ShouldReturnHappy() {
-        MoodAnalyser moodAnalyser = new MoodAnalyser();
+    public void givenMessage_whenSad_shouldReturnSad() {
+        String mood = moodAnalyser.analyseMood("Today I am sad");
+        Assert.assertEquals("sad", mood);
+    }
+
+    @Test
+    public void givenMessage_whenHappy_shouldReturnHappy() {
         String mood = moodAnalyser.analyseMood("Today I am happy");
         Assert.assertEquals("happy",mood);
-        System.out.println();
+    }
+
+    @Test
+    public void givenMessage_whenAny_shouldReturnHappy() {
+        String mood = moodAnalyser.analyseMood("I am in Any Mood");
+        Assert.assertEquals("happy", mood);
     }
 
 }
