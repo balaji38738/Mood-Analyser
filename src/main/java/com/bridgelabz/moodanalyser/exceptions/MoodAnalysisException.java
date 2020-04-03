@@ -3,10 +3,10 @@ package com.bridgelabz.moodanalyser.exceptions;
 public class MoodAnalysisException extends Exception {
 
     public enum ExceptionType {
-        EMPTY, NULL;
+        EMPTY, NULL, CLASS_NOT_FOUND;
     }
 
-    ExceptionType type;
+    public ExceptionType type;
 
     public MoodAnalysisException(ExceptionType type, String message) {
         super(message);
