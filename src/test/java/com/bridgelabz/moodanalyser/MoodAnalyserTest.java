@@ -1,6 +1,7 @@
 package com.bridgelabz.moodanalyser;
 
 import com.bridgelabz.moodanalyser.exceptions.MoodAnalysisException;
+import com.bridgelabz.moodanalyser.factory.MoodAnalyserFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,23 +56,9 @@ public class MoodAnalyserTest {
 
     @Test
     public void givenMoodAnalyser_whenProper_shouldReturnObject() {
-        try {
-            Constructor constructor = Class.forName("com.bridgelabz.moodanalyser.MoodAnalyser").getConstructor();
-            Object reflectionObject = constructor.newInstance();
-            MoodAnalyser moodAnalyser = (MoodAnalyser) reflectionObject;
-            MoodAnalyser realMoodObject = new MoodAnalyser();
-            Assert.assertTrue(realMoodObject.equals(moodAnalyser));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.getMoodAnalyserObject();
+        MoodAnalyser moodAnalyser = new MoodAnalyser();
+        Assert.assertTrue(moodAnalyser.equals(moodAnalyserObject));
     }
 
     @Test
