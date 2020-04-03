@@ -2,7 +2,6 @@ package com.bridgelabz.moodanalyser.factory;
 
 import com.bridgelabz.moodanalyser.MoodAnalyser;
 import com.bridgelabz.moodanalyser.exceptions.MoodAnalysisException;
-import com.sun.tools.javac.util.Assert;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -28,14 +27,32 @@ public class MoodAnalyserFactory {
         return null;
     }
 
-    public static MoodAnalyser getMoodAnalyserObject(String className, String... constParam)
+    public static Constructor<?> getMoodAnalyserObject(String className, Class<?> ... param )
+            throws MoodAnalysisException {
+        try
+        {
+            Class<?> moodAnalyserClass = Class.forName(className);
+            return moodAnalyserClass.getConstructor(param);
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,"Class not found");
+        }
+        catch (NoSuchMethodException e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,"METHOD not found");
+        }
+    }
+
+    public static MoodAnalyser getMoodAnalyserObject(String className, String param)
             throws MoodAnalysisException {
         try {
             Constructor constructor = Class.forName(className).getConstructor(String.class);
-            Object reflectionObject = constructor.newInstance(constParam);
+            Object reflectionObject = constructor.newInstance(param);
             return  (MoodAnalyser) reflectionObject;
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,
+                    "No such method");
         } catch (ClassNotFoundException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,
                     "Invalid class name");

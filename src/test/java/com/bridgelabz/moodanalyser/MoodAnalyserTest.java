@@ -63,38 +63,26 @@ public class MoodAnalyserTest {
 
     @Test
     public void givenMoodAnalyser_whenImProper_shouldThrowMoodAnalysisException() {
-        MoodAnalyser moodAnalyserObject = null;
-        try{
-            moodAnalyserObject = MoodAnalyserFactory.getMoodAnalyserObject("com.bridgelabz.MoodAnalyser");
-            MoodAnalyser moodAnalyser = new MoodAnalyser();
-        } catch (MoodAnalysisException moodAnalysisException){
-            Assert.assertEquals("Invalid class name", moodAnalysisException.getMessage());
+        try
+        {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getMoodAnalyserObject("CroodAnalyser");
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,e.type);
         }
     }
 
     @Test
     public void givenMoodAnalyser_whenInvalidConstructor_shouldThrowNoSuchMethodException() {
-        try {
-            Constructor constructor = Class.forName("com.bridgelabz.moodanalyser.MoodAnalyser").getConstructor(
-                    String.class, Integer.class);
-            Object reflectionObject = constructor.newInstance("I am in sad mood", 2);
-            MoodAnalyser moodAnalyser = (MoodAnalyser) reflectionObject;
-            MoodAnalyser realMoodObject = new MoodAnalyser("I am in sad mood");
-        } catch (NoSuchMethodException e) {
-            try {
-                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,
-                        "Invalid constructor");
-            }catch (MoodAnalysisException moodAnalysisException) {
-                Assert.assertEquals("Invalid constructor", moodAnalysisException.getMessage());
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        try
+        {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getMoodAnalyserObject("com.bridgelabz." +
+                    "moodanalyser.MoodAnalyser", Integer.class);
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,e.type);
         }
     }
 }
