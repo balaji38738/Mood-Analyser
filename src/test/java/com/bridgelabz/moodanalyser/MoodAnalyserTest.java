@@ -91,4 +91,20 @@ public class MoodAnalyserTest {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR, e.type);
         }
     }
+
+    @Test
+    public void givenWrongMethodName_shouldThrowException(){
+        moodAnalyser = new MoodAnalyser("I am in any mood");
+        Class<?> cls = moodAnalyser.getClass();
+        Method methodObject = null;
+        try {
+            methodObject = cls.getDeclaredMethod("returnMood");
+        } catch (NoSuchMethodException e) {
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, "No Such Method");
+            } catch (MoodAnalysisException ex) {
+                Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, ex.type);
+            }
+        }
+    }
 }
