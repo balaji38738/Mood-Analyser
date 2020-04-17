@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -101,10 +102,25 @@ public class MoodAnalyserTest {
             methodObject = cls.getDeclaredMethod("returnMood");
         } catch (NoSuchMethodException e) {
             try {
-                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, "No Such Method");
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,
+                        "No Such Method");
             } catch (MoodAnalysisException ex) {
                 Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, ex.type);
             }
         }
     }
+
+    @Test
+    public void givenFieldName_shouldChangeMoodToHappy() throws NoSuchFieldException,
+            IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        moodAnalyser = new MoodAnalyser("sad");
+        Class<?> cls = moodAnalyser.getClass();
+        Field field = cls.getDeclaredField("message");
+        field.set(moodAnalyser, "happy");
+        Method methodObject = cls.getDeclaredMethod("analyseMood");
+        String mood = (String) methodObject.invoke(moodAnalyser);
+        Assert.assertEquals("happy", mood);
+    }
+
+
 }
