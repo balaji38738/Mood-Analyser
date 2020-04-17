@@ -122,5 +122,21 @@ public class MoodAnalyserTest {
         Assert.assertEquals("happy", mood);
     }
 
-
+    @Test
+    public void givenImproperFieldName_shouldThrowException() throws IllegalAccessException {
+        moodAnalyser = new MoodAnalyser("sad");
+        Class<?> cls = moodAnalyser.getClass();
+        Field field = null;
+        try {
+            field = cls.getDeclaredField("mood");
+            field.set(moodAnalyser, "happy");
+        } catch (NoSuchFieldException e) {
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD,
+                        "No Such Field");
+            } catch (MoodAnalysisException ex) {
+                Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, ex.type);
+            }
+        }
+    }
 }
