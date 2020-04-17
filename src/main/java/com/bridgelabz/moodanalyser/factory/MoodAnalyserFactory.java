@@ -2,7 +2,6 @@ package com.bridgelabz.moodanalyser.factory;
 
 import com.bridgelabz.moodanalyser.MoodAnalyser;
 import com.bridgelabz.moodanalyser.exceptions.MoodAnalysisException;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -14,15 +13,9 @@ public class MoodAnalyserFactory {
                     getConstructor();
             Object reflectionObject = constructor.newInstance();
             return  (MoodAnalyser) reflectionObject;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException |
+                IllegalAccessException | InvocationTargetException |
+                ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;

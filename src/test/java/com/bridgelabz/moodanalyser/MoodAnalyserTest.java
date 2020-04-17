@@ -2,11 +2,8 @@ package com.bridgelabz.moodanalyser;
 
 import com.bridgelabz.moodanalyser.exceptions.MoodAnalysisException;
 import com.bridgelabz.moodanalyser.factory.MoodAnalyserFactory;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

@@ -1,7 +1,6 @@
 package com.bridgelabz.moodanalyser;
 
 import com.bridgelabz.moodanalyser.exceptions.MoodAnalysisException;
-
 import java.util.Objects;
 
 public class MoodAnalyser {
