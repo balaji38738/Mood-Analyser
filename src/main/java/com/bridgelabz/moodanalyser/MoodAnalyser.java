@@ -17,7 +17,8 @@ public class MoodAnalyser {
     public String analyseMood() throws MoodAnalysisException {
         try {
             if (this.message.equals(""))
-                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.EMPTY, "Empty mood");
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.EMPTY,
+                        "Empty mood");
             if (this.message.contains("sad"))
                 return "sad";
             if (this.message.contains("happy") || this.message.contains("any"))

@@ -74,7 +74,8 @@ public class MoodAnalyserTest {
     @Test
     public void givenMoodAnalyser_whenImProper_shouldThrowMoodAnalysisException() {
         try {
-            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getMoodAnalyserObject("CroodAnalyser");
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.
+                    getMoodAnalyserObject("CroodAnalyser");
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND, e.type);
         }
@@ -83,7 +84,8 @@ public class MoodAnalyserTest {
     @Test
     public void givenMoodAnalyser_whenInvalidConstructor_shouldThrowNoSuchMethodException() {
         try {
-            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getMoodAnalyserObject("com.bridgelabz." +
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.
+                    getMoodAnalyserObject("com.bridgelabz." +
                     "moodanalyser.MoodAnalyser", Integer.class);
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR, e.type);

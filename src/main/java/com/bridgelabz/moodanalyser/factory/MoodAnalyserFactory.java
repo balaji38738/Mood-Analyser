@@ -10,7 +10,8 @@ public class MoodAnalyserFactory {
 
     public static MoodAnalyser getMoodAnalyserObject() {
         try {
-            Constructor constructor = Class.forName("com.bridgelabz.moodanalyser.MoodAnalyser").getConstructor();
+            Constructor<?> constructor = Class.forName("com.bridgelabz.moodanalyser.MoodAnalyser").
+                    getConstructor();
             Object reflectionObject = constructor.newInstance();
             return  (MoodAnalyser) reflectionObject;
         } catch (NoSuchMethodException e) {
@@ -34,9 +35,11 @@ public class MoodAnalyserFactory {
             return moodAnalyserClass.getConstructor(param);
         }
         catch (ClassNotFoundException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,"Class not found");
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,
+                    "Class not found");
         } catch (NoSuchMethodException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,"No such method");
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,
+                    "No such method");
         }
     }
 
