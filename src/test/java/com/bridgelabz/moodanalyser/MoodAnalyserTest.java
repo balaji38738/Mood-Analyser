@@ -9,28 +9,38 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyserTest {
     private MoodAnalyser moodAnalyser;
 
     @Test
-    public void givenMessage_whenSad_shouldReturnSad() throws MoodAnalysisException {
+    public void givenMessage_whenSad_shouldReturnSad() throws NoSuchMethodException,
+            InvocationTargetException, IllegalAccessException {
         moodAnalyser = new MoodAnalyser("I am in sad mood");
-        String mood = moodAnalyser.analyseMood();
+        Class<?> cls = moodAnalyser.getClass();
+        Method methodObject = cls.getDeclaredMethod("analyseMood");
+        String mood = (String) methodObject.invoke(moodAnalyser);
         Assert.assertEquals("sad", mood);
     }
 
     @Test
-    public void givenMessage_whenHappy_shouldReturnHappy() throws MoodAnalysisException {
+    public void givenMessage_whenHappy_shouldReturnHappy() throws NoSuchMethodException,
+            InvocationTargetException, IllegalAccessException {
         moodAnalyser = new MoodAnalyser("I am in happy mood");
-        String mood = moodAnalyser.analyseMood();
-        Assert.assertEquals("happy",mood);
+        Class<?> cls = moodAnalyser.getClass();
+        Method methodObject = cls.getDeclaredMethod("analyseMood");
+        String mood = (String) methodObject.invoke(moodAnalyser);
+        Assert.assertEquals("happy", mood);
     }
 
     @Test
-    public void givenMessage_whenAny_shouldReturnHappy() throws MoodAnalysisException {
+    public void givenMessage_whenAny_shouldReturnHappy() throws NoSuchMethodException,
+            InvocationTargetException, IllegalAccessException {
         moodAnalyser = new MoodAnalyser("I am in any mood");
-        String mood = moodAnalyser.analyseMood();
+        Class<?> cls = moodAnalyser.getClass();
+        Method methodObject = cls.getDeclaredMethod("analyseMood");
+        String mood = (String) methodObject.invoke(moodAnalyser);
         Assert.assertEquals("happy", mood);
     }
 
@@ -39,7 +49,7 @@ public class MoodAnalyserTest {
         try {
             moodAnalyser = new MoodAnalyser(null);
             String mood = moodAnalyser.analyseMood();
-        }catch (MoodAnalysisException moodAnalysisException) {
+        } catch (MoodAnalysisException moodAnalysisException) {
             Assert.assertEquals("Invalid message", moodAnalysisException.getMessage());
         }
     }
@@ -58,31 +68,25 @@ public class MoodAnalyserTest {
     public void givenMoodAnalyser_whenProper_shouldReturnObject() {
         MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.getMoodAnalyserObject();
         MoodAnalyser moodAnalyser = new MoodAnalyser();
-        Assert.assertTrue(moodAnalyser.equals(moodAnalyserObject));
+        Assert.assertEquals(moodAnalyser, moodAnalyserObject);
     }
 
     @Test
     public void givenMoodAnalyser_whenImProper_shouldThrowMoodAnalysisException() {
-        try
-        {
+        try {
             Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getMoodAnalyserObject("CroodAnalyser");
-        }
-        catch (MoodAnalysisException e)
-        {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,e.type);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND, e.type);
         }
     }
 
     @Test
     public void givenMoodAnalyser_whenInvalidConstructor_shouldThrowNoSuchMethodException() {
-        try
-        {
+        try {
             Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getMoodAnalyserObject("com.bridgelabz." +
                     "moodanalyser.MoodAnalyser", Integer.class);
-        }
-        catch (MoodAnalysisException e)
-        {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,e.type);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR, e.type);
         }
     }
 }

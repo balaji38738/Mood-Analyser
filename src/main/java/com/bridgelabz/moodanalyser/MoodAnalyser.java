@@ -23,8 +23,7 @@ public class MoodAnalyser {
             if (this.message.contains("happy") || this.message.contains("any"))
                 return "happy";
             return "happy";
-        }
-        catch (NullPointerException nullPointerException) {
+        } catch (NullPointerException nullPointerException) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL,
                     "Invalid message");
         }

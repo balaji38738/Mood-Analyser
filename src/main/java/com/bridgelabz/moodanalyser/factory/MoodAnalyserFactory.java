@@ -29,40 +29,15 @@ public class MoodAnalyserFactory {
 
     public static Constructor<?> getMoodAnalyserObject(String className, Class<?> ... param )
             throws MoodAnalysisException {
-        try
-        {
+        try {
             Class<?> moodAnalyserClass = Class.forName(className);
             return moodAnalyserClass.getConstructor(param);
         }
-        catch (ClassNotFoundException e)
-        {
+        catch (ClassNotFoundException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,"Class not found");
-        }
-        catch (NoSuchMethodException e)
-        {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,"METHOD not found");
+        } catch (NoSuchMethodException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,"No such method");
         }
     }
 
-    public static MoodAnalyser getMoodAnalyserObject(String className, String param)
-            throws MoodAnalysisException {
-        try {
-            Constructor constructor = Class.forName(className).getConstructor(String.class);
-            Object reflectionObject = constructor.newInstance(param);
-            return  (MoodAnalyser) reflectionObject;
-        } catch (NoSuchMethodException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVALID_CONSTRUCTOR,
-                    "No such method");
-        } catch (ClassNotFoundException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND,
-                    "Invalid class name");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
